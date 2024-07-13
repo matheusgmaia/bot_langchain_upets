@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-pyton-dotenv
+python-dotenv
 openai
 langchain
 tiktoken
