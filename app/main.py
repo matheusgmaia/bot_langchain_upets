@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from langchain_config import configure_langchain, create_conversational_chain
+from app.langchain_config import configure_langchain, create_conversational_chain
 from dotenv import load_dotenv
 
 # Carregar variáveis de ambiente
@@ -29,3 +29,8 @@ async def chat(request: ChatRequest):
 @app.get("/")
 async def read_root():
     return {"messages": "Welcome to the Pet Adoption Bot API"}
+
+if __name__ == "_main_":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

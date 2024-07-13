@@ -35,9 +35,9 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 def configure_langchain():
     """Configura LangChain com os dados fornecidos."""
     embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
-    pets_documents = CSVLoader('./data/pets.csv').load()
+    pets_documents = CSVLoader('./app/data/pets.csv').load()
     
-    text_documents = TextLoader('./data/pets.txt').load()
+    text_documents = TextLoader('./app/data/pets.txt').load()
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     text_documents_s = text_splitter.split_documents(text_documents)
     
