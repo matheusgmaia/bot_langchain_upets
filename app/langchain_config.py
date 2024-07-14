@@ -54,12 +54,14 @@ def create_conversational_chain(vector_store):
     chat_model = get_chat_model()
 
     custom_template = """
-    Dado o seguinte histórico de conversa e uma última mensagem , reformule o histórico para ser uma mensagem independente, em seu idioma original, com detalhes sobre as decisões tomadas ao longo do caminho. De forma que se adeque as conversas.
+    Dado o seguinte histórico de conversa e uma última mensagem, reformule o histórico para ser uma mensagem histórico independente resumida, em seu idioma original, com detalhes sobre as decisões tomadas ao longo do caminho. De forma que se adeque as conversas.
     Histórico da Conversa:
     {chat_history}
     A última mensagem do usuário foi:
     Última Mensagem: {question}
-    Retorne o histórico reformulado e a última mensagem do usuário em separado (Seja sucinto):
+    
+    Retorne o histórico reformulado indepentente (Seja sucinto): 
+    Retorne também a última mensagem do usuário em separado:
     """
     
     general_system_template = PROMPT_BASE+r""" 
