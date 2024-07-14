@@ -38,6 +38,7 @@ class ChatResponse(BaseModel):
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
+    print(f"Received request: {request}")
     user_message = request.message
     user_history = request.history
     response = conversational_chain.run(question=user_message, chat_history=user_history)
