@@ -2,11 +2,28 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from app.langchain_config import configure_langchain, create_conversational_chain
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 # Carregar variáveis de ambiente
 load_dotenv()
 
 app = FastAPI()
+
+# Custom middleware to handle subdomain wildcard
+class CustomCORSMiddleware(StarletteCORSMiddleware):
+    def is_allowed_origin(self, origin: str) -> bool:
+        if origin == "https://deco.site" or origin.endswith(".deco.site"):
+            return True
+        return super().is_allowed_origin(origin)
+
+app.add_middleware(
+    CustomCORSMiddleware,
+    allow_origins=["https://deco.site", "https://*.deco.site"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Configurar LangChain
 vector_store = configure_langchain()
