@@ -3,27 +3,27 @@ from pydantic import BaseModel
 from app.langchain_config import configure_langchain, create_conversational_chain
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 # Carregar variáveis de ambiente
 load_dotenv()
 
 app = FastAPI()
 
-# Custom middleware to handle subdomain wildcard
-class CustomCORSMiddleware(StarletteCORSMiddleware):
-    def is_allowed_origin(self, origin: str) -> bool:
-        if origin == "https://deco.site" or origin.endswith(".deco.site"):
-            return True
-        return super().is_allowed_origin(origin)
+# Definindo os domínios permitidos
+origins = [
+    "https://matheusgmaia33--hack-five.deco.site",
+    "https://outrodominio.deco.site",
+    "https://terceirodominio.deco.site",
+]
 
 app.add_middleware(
-    CustomCORSMiddleware,
-    allow_origins=["https://deco.site", "https://*.deco.site"],
+    CORSMiddleware,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # Configurar LangChain
 vector_store = configure_langchain()
@@ -45,9 +45,9 @@ async def chat(request: ChatRequest):
 
 @app.get("/")
 async def read_root():
-    return {"messages": "Welcome to the Pet Adoption Bot API"}
+    return {"message": "Welcome to the Pet Adoption Bot API"}
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
