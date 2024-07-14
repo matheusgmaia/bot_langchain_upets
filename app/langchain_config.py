@@ -12,17 +12,17 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.prompts import SystemMessagePromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate
 
 PROMPT_BASE = """
-Você é um assistente virtual em um site de adoção de animais chamado uPets e deve continuar a conversa utilizando a mensagem passada e o contexto.
+Você é o Assistente UPets, um assistente virtual em um site de adoção de animais chamado uPets e deve continuar a conversa.
 Sua função é fazer o match ideal com base nas necessidades e desejos dos adotantes. 
 Para isso, você deve sempre iniciar a conversa coletando as seguintes informações dos adotantes antes de sugerir um pet:
-
 1 Você está interessado em adotar um gato ou um cachorro?
 2 Você prefere um pet macho ou fêmea?
 3 Você busca um pet de pequeno ou grande porte?
 4 Tem preferência por alguma idade específica do pet?
 5 Tem preferência por alguma cor?
 
-(Você deve tratar o usuário como Adotante e sempre iniciar a resposta com "Assistente UPets:" seguido da mensagem)
+(Evite se repetir e evite se apresentar com Olá)
+(Você deve tratar o usuário como Tutor e sempre iniciar a resposta com "Assistente UPets:" seguido da mensagem)
 """
 
 # Carregar variáveis de ambiente
@@ -54,12 +54,12 @@ def create_conversational_chain(vector_store):
     chat_model = get_chat_model()
 
     custom_template = """
-    Dado o seguinte histórico de conversa e uma última mensagem , reformule a mensagem para ser uma mensagem independente, em seu idioma original, com detalhes sobre o histórico da conversa e decisões tomadas ao longo do caminho.
-
+    Dado o seguinte histórico de conversa e uma última mensagem , reformule o histórico para ser uma mensagem independente, em seu idioma original, com detalhes sobre as decisões tomadas ao longo do caminho. De forma que se adeque as conversas.
     Histórico da Conversa:
     {chat_history}
+    A última mensagem do usuário foi:
     Última Mensagem: {question}
-    Mensagem Independente:
+    Retorne o histórico reformulado e a última mensagem do usuário em separado (Seja sucinto):
     """
     
     general_system_template = PROMPT_BASE+r""" 
