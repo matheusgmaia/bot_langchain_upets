@@ -13,8 +13,12 @@ app = FastAPI()
 # Definindo os domínios permitidos
 origins = [
     "https://matheusgmaia33--hack-five.deco.site",
-    "https://outrodominio.deco.site",
-    "https://terceirodominio.deco.site",
+    "https://localhost--hack-five.deco.site",
+    "https://rodrigoecavalcanti--hack-five.deco.site",
+    "https://jrobsonjr--hack-five.deco.site",
+    "https://carlos.ribeiro--hack-five.deco.site",
+    "https://carlosribeiro--hack-five.deco.site",
+    "https://hack-five.deco.site",
 ]
 
 app.add_middleware(
